@@ -10,7 +10,7 @@ There are four components to the ECOMETRICS app demonstrator: the Data Spaces, t
 There are two kinds of users: a Data Provider that creates and supplies a machine learning model and a Data Scientist that uses the model to compute ESG scores on their own private company data.
 The Virtual Data Trustee ensures that the model and the company data are kept separate and that the ESG scores are computed in a privacy-preserving way.
 It also monitors the usage of the model and the data.
-The following diagram shows the architecture of the ECOMETRICS app. ![ECOMETRICS architecture](./assets/architecture.svg)
+The following diagram shows the architecture of the ESG Indicator Service demo. ![ESG Indicator Service architecture](./assets/architecture.svg)
 
 ```mermaid
 graph TD
