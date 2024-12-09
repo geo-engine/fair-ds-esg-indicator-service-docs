@@ -1,12 +1,12 @@
 # FAIR-DS Demonstrator: Industry Data & ESG, Virtual Data Trustee
 
-The ESG Indicator Serviceis a demonstrator for the FAIR-DS project.
+The ESG Indicator Service is a demonstrator for the FAIR-DS project.
 This document presents the software architecture.
 You can find more information about the app itself in the [FAIR-DS wiki](https://fair-ds4nfdi.github.io/wiki/).
 
 ## Architecture
 
-There are four components to the ECOMETRICS app demonstrator: the Data Spaces, the Model Producer, the Virtual Data Trustee and the ESG Indicator Service Dashboard.
+There are four components to the ESG Indicator Service app demonstrator: the Data Spaces, the Model Producer, the Virtual Data Trustee and the ESG Indicator Service Dashboard.
 There are two kinds of users: a Data Provider that creates and supplies a machine learning model and a Data Scientist that uses the model to compute ESG scores on their own private company data.
 The Virtual Data Trustee ensures that the model and the company data are kept separate and that the ESG scores are computed in a privacy-preserving way.
 It also monitors the usage of the model and the data.
