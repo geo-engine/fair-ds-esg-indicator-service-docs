@@ -13,7 +13,7 @@ It also monitors the usage of the model and the data.
 The following diagram shows the architecture of the ESG Indicator Service demo. ![ESG Indicator Service architecture](./assets/architecture.svg)
 
 ```mermaid
-graph TD
+flowchart
   %% Define subgraphs for grouping
   subgraph DataSpaces[Data Spaces]
     Research[Research]
@@ -22,46 +22,53 @@ graph TD
   end
 
   subgraph ModelProducer[Model Producer]
-    GeoEngine1[Geo Engine]
-    Jupyter[Jupyter Notebook]
+    subgraph GeoEngine1[Geo Engine]
+      MPDataConnector[Data Connector]
+      MPProcessingEngine[Processing Engine]
+      MPAPI[API]
+    end
+
+    subgraph Jupyter[Jupyter Notebook]
+      PythonLibrary[Python Library]
+      SKLearn[scikit-learn]
+      ONNX[ONNX]
+    end
   end
 
   subgraph VirtualDataTrustee[Virtual Data Trustee]
-    GeoEngine2[Geo Engine]
-    DataConnector[Data Connector]
-    ProcessingEngine[Processing Engine]
+    subgraph VDGeoEngine[Geo Engine]
+      VDDataConnector[Data Connector]
+      VDProcessingEngine[Processing Engine]
+      VDAPI[API]
+    end
     Log[Log]
-    API[API]
+    ESGService[ESG Indicator Dashboard]
   end
 
   %% Define standalone nodes
-  ESGService[ESG Indicator Dashboard]
-  DataScientist[Data Scientist]
-  DataProvider[Data Provider]
+
+  DataScientist(Data Scientist)
+  DataProducer(Data Producer)
 
   %% Link nodes
-  %% Data Spaces links
-  DataSpaces --> ModelProducer
 
-  %% Model Producer links
-  ModelProducer --> DataSpaces
+  MPDataConnector --> MPProcessingEngine --> MPAPI
+  MPAPI --> PythonLibrary --> SKLearn --> ONNX --> MPAPI
+
+  MPAPI --> |classification results| VDDataConnector
+  VDDataConnector --> VDProcessingEngine --> VDAPI
+  VDAPI --> ESGService
+  VDGeoEngine --> Log
 
   %% Virtual Data Trustee links
-  VirtualDataTrustee -->|Protected Data Access| Industry
-  Industry -->|Classification Results| VirtualDataTrustee
+  VDDataConnector -->|Protected Data Access| Industry
 
-  %% ESG Indicator Dashboard links
-  DataScientist -->|Select Properties and Compute Scores| ESGService
+  DataProducer --> |monitor usage| VirtualDataTrustee
+  DataScientist --> |select properties & analyze scores| VirtualDataTrustee
 
-  %% Data Provider links
-  DataProvider -->|Monitor Usage| VirtualDataTrustee
+  MPDataConnector --> Research
+  MPDataConnector --> Space
 
-  %% Internal Virtual Data Trustee connections
-  DataConnector --> ProcessingEngine
-  ProcessingEngine --> Log
-  Log --> API
-  API --> GeoEngine2
-  GeoEngine2 --> VirtualDataTrustee
 
 ```
 
